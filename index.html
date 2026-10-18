@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Dream Silver — خواتم وسلاسل وحلقان فضة</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Reem+Kufi:wght@500;700&family=Readex+Pro:wght@300;400;600&display=swap" rel="stylesheet">
+<style>
+/* ====== الألوان: علبة مجوهرات قطيفة + فضة + شمبانيا ====== */
+:root{
+  --velvet:#2a1630;      /* قطيفة العلبة */
+  --velvet-deep:#170b1b;
+  --plum:#4a2a52;
+  --mauve:#9c7f97;       /* كلام هادي */
+  --ivory:#f3ece4;       /* الكلام الأساسي */
+  --champagne:#e8d3a9;   /* اللمسة الذهبي */
+  --wa:#25d366;
+  color-scheme: dark;
+}
+*{box-sizing:border-box}
+html,body{margin:0;background:var(--velvet-deep);color:var(--ivory);font-family:'Readex Pro',system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+a{color:inherit}
+button{font-family:inherit}
+:focus-visible{outline:2px solid var(--champagne);outline-offset:3px}
+
+/* ====== الشريط اللي فوق ====== */
+.top{position:absolute;inset:0 0 auto;z-index:5;display:flex;align-items:center;justify-content:space-between;padding:calc(18px + env(safe-area-inset-top,0px)) clamp(18px,4vw,48px) 18px}
+.brand{font-family:'Reem Kufi',serif;font-weight:700;font-size:22px;letter-spacing:.5px;color:var(--ivory);text-decoration:none}
+.brand small{display:block;font-family:'Readex Pro';font-weight:300;font-size:12px;color:var(--mauve);letter-spacing:0}
+.wa-top{display:inline-flex;align-items:center;gap:8px;padding:9px 16px;border-radius:999px;border:1px solid rgba(232,211,169,.45);color:var(--champagne);text-decoration:none;font-size:14px}
+.wa-top:hover{background:rgba(232,211,169,.1)}
+
+/* ====== المسرح: القطيفة والقطع الثلاثية الأبعاد ====== */
+.stage{position:relative;min-height:100svh;display:grid;grid-template-rows:auto 1fr auto auto;overflow:hidden;
+  background:
+    radial-gradient(120% 70% at 50% 58%, var(--plum) 0%, var(--velvet) 42%, var(--velvet-deep) 100%);
+}
+/* نعومة القطيفة */
+.stage::before{content:"";position:absolute;inset:0;pointer-events:none;opacity:.22;mix-blend-mode:overlay;
+  background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 .55 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>")}
+.intro{position:relative;z-index:2;text-align:center;padding:calc(96px + env(safe-area-inset-top,0px)) 20px 0;max-width:760px;margin:0 auto}
+.intro h1{font-family:'Reem Kufi',serif;font-weight:700;font-size:clamp(30px,5.2vw,58px);line-height:1.15;margin:0;color:var(--ivory)}
+.intro p{margin:14px auto 0;max-width:46ch;color:var(--mauve);font-size:clamp(15px,1.6vw,17px);line-height:1.8}
+.canvas-wrap{position:relative;z-index:1;min-height:340px;cursor:grab;touch-action:pan-y}
+.canvas-wrap.hovering{cursor:pointer}
+#c{position:absolute;inset:0;width:100%;height:100%;display:block}
+
+/* اسم القطعة اللي إنت قريب منها */
+.caption{position:relative;z-index:2;text-align:center;min-height:62px;padding:0 20px}
+.caption .name{display:block;font-family:'Reem Kufi',serif;font-size:clamp(20px,2.4vw,26px);color:var(--ivory);transition:opacity .25s}
+.caption .meta{display:block;margin-top:4px;color:var(--champagne);font-size:15px;transition:opacity .25s}
+.caption.fade .name,.caption.fade .meta{opacity:0}
+
+/* ====== أزرار الأقسام (تحت) ====== */
+.cats{position:relative;z-index:3;display:flex;justify-content:center;gap:clamp(8px,2vw,18px);padding:18px 16px calc(30px + env(safe-area-inset-bottom,0px));flex-wrap:wrap}
+.cat{position:relative;display:flex;flex-direction:column;align-items:center;gap:6px;min-width:112px;padding:14px 22px 12px;border-radius:22px;border:1px solid rgba(243,236,228,.14);background:rgba(23,11,27,.45);color:var(--mauve);cursor:pointer;font-size:16px;font-weight:600;transition:color .2s,border-color .2s,background .2s;backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px)}
+.cat svg{width:30px;height:30px;stroke:currentColor;fill:none;stroke-width:1.4}
+.cat:hover{color:var(--ivory);border-color:rgba(243,236,228,.3)}
+.cat[aria-selected="true"]{color:var(--velvet-deep);background:var(--champagne);border-color:var(--champagne)}
+.cat .count{font-size:11.5px;font-weight:400;opacity:.8}
+.hint{position:absolute;z-index:2;left:50%;bottom:150px;transform:translateX(-50%);font-size:12.5px;color:var(--mauve);opacity:.75;white-space:nowrap;pointer-events:none}
+
+/* ====== ازاي تطلبي ====== */
+.how{background:var(--ivory);color:var(--velvet-deep);padding:clamp(56px,8vw,96px) clamp(20px,6vw,80px)}
+.how h2{font-family:'Reem Kufi',serif;font-size:clamp(26px,3.4vw,38px);margin:0 0 34px;color:var(--velvet)}
+.steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:clamp(18px,3vw,40px);list-style:none;margin:0;padding:0;counter-reset:s}
+.steps li{counter-increment:s;border-top:2px solid var(--velvet);padding-top:18px}
+.steps li::before{content:counter(s, arabic-indic);display:block;font-family:'Reem Kufi',serif;font-size:42px;color:var(--plum);line-height:1;margin-bottom:10px}
+.steps h3{margin:0 0 6px;font-size:19px}
+.steps p{margin:0;color:#5b4a5e;line-height:1.8;font-size:15px;max-width:34ch}
+.how .cta{margin-top:40px;display:inline-flex;align-items:center;gap:10px;padding:14px 26px;border-radius:999px;background:var(--velvet);color:var(--ivory);text-decoration:none;font-weight:600}
+footer{background:var(--velvet-deep);color:var(--mauve);text-align:center;padding:26px 20px calc(26px + env(safe-area-inset-bottom,0px));font-size:13px}
+
+/* ====== تفاصيل القطعة ====== */
+.sheet{position:fixed;inset:0;z-index:20;display:grid;place-items:end center;background:rgba(10,4,12,.55);opacity:0;pointer-events:none;transition:opacity .25s}
+.sheet.open{opacity:1;pointer-events:auto}
+.panel{width:min(560px,100%);background:var(--ivory);color:var(--velvet-deep);border-radius:26px 26px 0 0;padding:26px clamp(20px,4vw,34px) calc(26px + env(safe-area-inset-bottom,0px));transform:translateY(40px);transition:transform .3s cubic-bezier(.2,.8,.2,1)}
+.sheet.open .panel{transform:none}
+.panel .x{float:left;border:none;background:none;font-size:22px;cursor:pointer;color:var(--plum);padding:4px 8px}
+.panel h3{font-family:'Reem Kufi',serif;font-size:26px;margin:0}
+.panel .price{color:var(--plum);font-size:20px;font-weight:600;margin-top:6px}
+.panel p{color:#5b4a5e;line-height:1.8;margin:12px 0 0}
+.opts{display:flex;gap:8px;flex-wrap:wrap;margin-top:16px}
+.opts button{min-width:52px;padding:9px 14px;border-radius:12px;border:1.5px solid #d8c9d6;background:#fff;color:var(--velvet);font-size:15px;cursor:pointer}
+.opts button[aria-pressed="true"]{background:var(--velvet);border-color:var(--velvet);color:var(--ivory)}
+.opt-label{margin-top:18px;font-size:13.5px;color:#7a6a7c}
+.order{display:flex;align-items:center;justify-content:center;gap:10px;width:100%;margin-top:22px;padding:15px;border:none;border-radius:16px;background:var(--wa);color:#05391c;font-size:17px;font-weight:700;text-decoration:none;cursor:pointer}
+.order svg{width:22px;height:22px;fill:currentColor}
+
+.nogl{position:absolute;inset:0;display:grid;place-items:center;text-align:center;color:var(--mauve);padding:20px}
+@media (max-width:640px){
+  .hint{bottom:142px}
+  .cat{min-width:96px;padding:12px 14px 10px;font-size:15px}
+}
+@media (prefers-reduced-motion: reduce){ .panel,.sheet{transition:none} }
+</style>
+</head>
+<body>
+
+<header class="top">
+  <a class="brand" href="#" id="brandName">Dream Silver<small>فضة إيطالي — الدفع عند الاستلام</small></a>
+  <a class="wa-top" id="waTop" href="#" target="_blank" rel="noopener">
+    <svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2Zm4.6-6.1c-.3-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.6.1a6.7 6.7 0 0 1-3.3-2.9c-.2-.4.2-.4.7-1.3.1-.2 0-.3 0-.5l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.8 11.9 11.9 0 0 0 4.6 4c1.7.7 2.4.8 3.2.6.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.2-1.2-.1-.1-.3-.2-.6-.3Z"/></svg>
+    اسألينا على واتساب
+  </a>
+</header>
+
+<main class="stage">
+  <div class="intro">
+    <h1>قرّبي من القطعة… وشوفيها من كل ناحية</h1>
+    <p>اختاري القسم من تحت، وحرّكي الماوس فوق القطع: اللي تقرّبي منها تكبر وتلف معاكي. دوسي عليها عشان تطلبيها.</p>
+  </div>
+  <div class="canvas-wrap" id="wrap" aria-label="معرض القطع">
+    <canvas id="c" aria-hidden="true"></canvas>
+  </div>
+  <div class="caption" id="caption" aria-live="polite"><span class="name"></span><span class="meta"></span></div>
+  <nav class="cats" role="tablist" aria-label="الأقسام">
+    <button class="cat" role="tab" data-cat="rings" aria-selected="true">
+      <svg viewBox="0 0 32 32" aria-hidden="true"><circle cx="16" cy="19" r="9"/><path d="M12 7.5 16 4l4 3.5-4 3.5z"/></svg>
+      خواتم<span class="count"></span></button>
+    <button class="cat" role="tab" data-cat="chains" aria-selected="false">
+      <svg viewBox="0 0 32 32" aria-hidden="true"><path d="M5 4c0 10 5 15 11 15S27 14 27 4"/><path d="M16 19v3"/><path d="M16 22l-3.5 3.5L16 29l3.5-3.5z"/></svg>
+      سلاسل<span class="count"></span></button>
+    <button class="cat" role="tab" data-cat="earrings" aria-selected="false">
+      <svg viewBox="0 0 32 32" aria-hidden="true"><circle cx="10" cy="17" r="5.5"/><circle cx="22" cy="17" r="5.5"/><path d="M10 6v5.5M22 6v5.5"/></svg>
+      حلقان<span class="count"></span></button>
+  </nav>
+  <div class="hint" id="hint">حرّكي الماوس يمين وشمال فوق القطع</div>
+</main>
+
+<section class="how" aria-labelledby="howT">
+  <h2 id="howT">إزاي تطلبي</h2>
+  <ol class="steps">
+    <li><h3>اختاري القطعة والمقاس</h3><p>دوسي على أي قطعة فوق، واختاري المقاس أو الطول اللي يناسبك.</p></li>
+    <li><h3>ابعتيلنا على واتساب</h3><p>زرار "اطلبي على واتساب" بيكتبلك الرسالة جاهزة باسم القطعة وسعرها.</p></li>
+    <li><h3>استلمي وادفعي عند الباب</h3><p>بنأكد معاكي العنوان، والأوردر بيوصلك وتدفعي وإنتي بتستلمي.</p></li>
+  </ol>
+  <a class="cta" id="waHow" href="#" target="_blank" rel="noopener">ابدئي الطلب على واتساب</a>
+</section>
+
+<footer>Dream Silver · كل الأسعار بالجنيه المصري</footer>
+
+<div class="sheet" id="sheet" role="dialog" aria-modal="true" aria-labelledby="pName">
+  <div class="panel">
+    <button class="x" id="sheetX" aria-label="قفل">✕</button>
+    <h3 id="pName"></h3>
+    <div class="price" id="pPrice"></div>
+    <p id="pDesc"></p>
+    <div class="opt-label" id="pOptLabel"></div>
+    <div class="opts" id="pOpts"></div>
+    <a class="order" id="pOrder" href="#" target="_blank" rel="noopener">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm4.6 12.1c-.3-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.6.1a6.7 6.7 0 0 1-3.3-2.9c-.2-.4.2-.4.7-1.3.1-.2 0-.3 0-.5l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.8 11.9 11.9 0 0 0 4.6 4c1.7.7 2.4.8 3.2.6.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.2-1.2-.1-.1-.3-.2-.6-.3Z"/></svg>
+      اطلبي على واتساب
+    </a>
+  </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script>
+/* =====================================================================
+   ⚙️ الإعدادات — غيّري دول بس
+   ===================================================================== */
+const CONFIG = {
+  BRAND: 'Dream Silver',
+  WHATSAPP: '201000000000',   // رقم الواتساب بالكود الدولي من غير + (مثلاً 2010xxxxxxxx)
+};
+// القطع: الاسم، السعر، الوصف، والشكل الثلاثي الأبعاد (shape) — غيّري الأسماء والأسعار براحتك
+const PRODUCTS = {
+  rings: { label:'خواتم', opt:'المقاس', opts:['6','7','8','9','10'], items:[
+    { name:'خاتم سوليتير', price:650, desc:'فص زيركون كبير على ٤ مخالب، وحلقة رفيعة ناعمة.', shape:'solitaire' },
+    { name:'دبلة سادة', price:520, desc:'دبلة فضة مدورة وتقيلة شوية، تنفع لوحدها أو مع خاتم.', shape:'band' },
+    { name:'خاتم مبروم', price:590, desc:'خيطين فضة ملفوفين حوالين بعض.', shape:'twist' },
+    { name:'خاتم صف فصوص', price:720, desc:'صف فصوص صغيرة على وش الخاتم بيلمع من كل زاوية.', shape:'eternity' },
+    { name:'خاتم قلب', price:610, desc:'قلب صغير مرفوع على حلقة رفيعة.', shape:'heartRing' },
+  ]},
+  chains: { label:'سلاسل', opt:'الطول', opts:['40 سم','45 سم','50 سم'], items:[
+    { name:'سلسلة قلب', price:780, desc:'سلسلة رفيعة ودلاية قلب مليان.', shape:'heart' },
+    { name:'سلسلة دائرة', price:740, desc:'دلاية دائرة مفرغة وفي نصها فص.', shape:'circle' },
+    { name:'سلسلة نجمة', price:760, desc:'نجمة صغيرة بتلقط النور.', shape:'star' },
+    { name:'سلسلة قطرة', price:820, desc:'فص على شكل قطرة نازل من السلسلة.', shape:'drop' },
+    { name:'سلسلة بار', price:700, desc:'بار رفيع ينفع يتحفر عليه اسم.', shape:'bar' },
+  ]},
+  earrings: { label:'حلقان', opt:null, opts:[], items:[
+    { name:'حلق دائرة', price:480, desc:'حلقان دائرة رفيعة ومتوسطة الحجم.', shape:'hoops' },
+    { name:'حلق قطرة', price:560, desc:'فص قطرة متعلق في سلسلة قصيرة.', shape:'dropEar' },
+    { name:'حلق فص', price:420, desc:'فص واحد لامع لازق في الودن.', shape:'studs' },
+    { name:'حلق هجي', price:450, desc:'دايرة صغيرة تقيلة لازقة في الودن.', shape:'huggies' },
+    { name:'حلق طويل', price:590, desc:'بار رفيع طويل بيتحرك مع الحركة.', shape:'bars' },
+  ]},
+};
+
+/* ---------- واتساب ---------- */
+const waLink = text => 'https://wa.me/' + CONFIG.WHATSAPP + '?text=' + encodeURIComponent(text);
+document.getElementById('waTop').href = waLink('أهلاً، عايزة أسأل عن القطع');
+document.getElementById('waHow').href = waLink('أهلاً، عايزة أطلب');
+document.querySelectorAll('.cat').forEach(b => { b.querySelector('.count').textContent = PRODUCTS[b.dataset.cat].items.length + ' قطع'; });
+const egp = n => Number(n).toLocaleString('ar-EG') + ' ج';
+
+/* =====================================================================
+   🎬 المشهد الثلاثي الأبعاد
+   ===================================================================== */
+const wrap = document.getElementById('wrap'), canvas = document.getElementById('c');
+const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+let renderer;
+try{ renderer = new THREE.WebGLRenderer({ canvas, antialias:true, alpha:true }); }
+catch(e){ wrap.innerHTML = '<div class="nogl">الجهاز ده مش بيدعم العرض الثلاثي الأبعاد — اختاري القسم ودوسي على اسم القطعة تحت.</div>'; }
+
+if(renderer){
+renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
+renderer.outputEncoding = THREE.sRGBEncoding;
+renderer.toneMapping = THREE.ACESFilmicToneMapping;
+renderer.toneMappingExposure = 1.05;
+const scene = new THREE.Scene();
+const camera = new THREE.PerspectiveCamera(30, 1, 0.1, 100);
+camera.position.set(0, 0.35, 11);
+
+/* انعكاسات الفضة: أوضة صغيرة فيها لمبات */
+(function makeEnv(){
+  const pm = new THREE.PMREMGenerator(renderer);
+  const env = new THREE.Scene();
+  env.add(new THREE.Mesh(new THREE.BoxGeometry(20, 20, 20), new THREE.MeshBasicMaterial({ color:0x2a1d2e, side:THREE.BackSide })));
+  const panel = (w, h, c, x, y, z, ry) => { const m = new THREE.Mesh(new THREE.PlaneGeometry(w, h), new THREE.MeshBasicMaterial({ color:c, side:THREE.DoubleSide })); m.position.set(x, y, z); m.lookAt(0, 0, 0); if(ry) m.rotation.z = ry; env.add(m); };
+  panel(9, 2.2, 0xffffff, 0, 8, 2);
+  panel(3, 8, 0xfff4e6, -9, 1, 2);
+  panel(3, 8, 0xe6f0ff, 9, 2, -1);
+  panel(6, 2, 0xffd9e6, 0, -6, 6);
+  panel(4, 4, 0xffffff, 2, 3, 9);
+  panel(14, 8, 0x8d8a99, 0, -1, 10); // نور هادي من قدام عشان الوشوش المسطحة (القلب والنجمة) تلمع
+  scene.environment = pm.fromScene(env, 0.035).texture;
+})();
+scene.add(new THREE.HemisphereLight(0xfff2f6, 0x2a1630, 0.35));
+const key = new THREE.DirectionalLight(0xffffff, 0.9); key.position.set(-3, 5, 6); scene.add(key);
+
+/* الخامات */
+const MAT = {
+  silver: new THREE.MeshStandardMaterial({ color:0xe6e8ec, metalness:1, roughness:0.17, envMapIntensity:1.25 }),
+  silverSoft: new THREE.MeshStandardMaterial({ color:0xd7dadf, metalness:1, roughness:0.32, envMapIntensity:1.1 }),
+  gem: new THREE.MeshStandardMaterial({ color:0xffffff, metalness:0.1, roughness:0.02, envMapIntensity:2.6, flatShading:true }),
+  gemPink: new THREE.MeshStandardMaterial({ color:0xffc9da, metalness:0.1, roughness:0.02, envMapIntensity:2.4, flatShading:true }),
+};
+
+/* ---------- قطع بتتبني بالكود (لحد ما تحطي صور منتجاتك) ---------- */
+const G = {};
+const tube = (curve, r, seg = 200) => new THREE.Mesh(new THREE.TubeGeometry(curve, seg, r, 14, true), MAT.silver);
+const gem = (r, mat = MAT.gem, stretch = 1) => { const m = new THREE.Mesh(new THREE.OctahedronGeometry(r, 0), mat); m.scale.y = stretch; return m; };
+const heartShape = s => { const h = new THREE.Shape(); h.moveTo(0, -0.9 * s); h.bezierCurveTo(0.2 * s, -0.6 * s, 1.0 * s, -0.25 * s, 0.95 * s, 0.25 * s); h.bezierCurveTo(0.9 * s, 0.75 * s, 0.25 * s, 0.85 * s, 0, 0.42 * s); h.bezierCurveTo(-0.25 * s, 0.85 * s, -0.9 * s, 0.75 * s, -0.95 * s, 0.25 * s); h.bezierCurveTo(-1.0 * s, -0.25 * s, -0.2 * s, -0.6 * s, 0, -0.9 * s); return h; };
+const starShape = (R, r, n = 5) => { const s = new THREE.Shape(); for(let i = 0; i < n * 2; i++){ const a = i / (n * 2) * Math.PI * 2 + Math.PI / 2, rad = i % 2 ? r : R; const x = Math.cos(a) * rad, y = Math.sin(a) * rad; i ? s.lineTo(x, y) : s.moveTo(x, y); } s.closePath(); return s; };
+const extrude = (shape, depth = 0.08) => new THREE.Mesh(new THREE.ExtrudeGeometry(shape, { depth, bevelEnabled:true, bevelThickness:0.035, bevelSize:0.03, bevelSegments:4, curveSegments:24 }).center(), MAT.silver);
+const band = (R = 0.62, r = 0.07) => new THREE.Mesh(new THREE.TorusGeometry(R, r, 28, 120), MAT.silver);
+
+G.solitaire = () => { const g = new THREE.Group(); g.add(band(0.6, 0.055));
+  const s = gem(0.2); s.position.y = 0.86; g.add(s);
+  for(let i = 0; i < 4; i++){ const p = new THREE.Mesh(new THREE.CylinderGeometry(0.018, 0.022, 0.26, 8), MAT.silver); const a = i / 4 * Math.PI * 2 + Math.PI / 4; p.position.set(Math.cos(a) * 0.12, 0.72, Math.sin(a) * 0.12); p.rotation.z = -Math.cos(a) * 0.35; p.rotation.x = Math.sin(a) * 0.35; g.add(p); }
+  return g; };
+G.band = () => { const g = new THREE.Group(); const m = band(0.6, 0.12); m.scale.z = 1.6; g.add(m); return g; };
+G.twist = () => { const g = new THREE.Group();
+  for(const ph of [0, Math.PI]){ const pts = []; for(let i = 0; i <= 240; i++){ const t = i / 240 * Math.PI * 2, k = 9, rr = 0.055; pts.push(new THREE.Vector3(Math.cos(t) * (0.6 + rr * Math.cos(k * t + ph)), Math.sin(t) * (0.6 + rr * Math.cos(k * t + ph)), rr * Math.sin(k * t + ph))); }
+    g.add(tube(new THREE.CatmullRomCurve3(pts, true), 0.04, 360)); }
+  return g; };
+G.eternity = () => { const g = new THREE.Group(); g.add(band(0.6, 0.07));
+  for(let i = -3; i <= 3; i++){ const a = Math.PI / 2 + i * 0.22; const s = gem(0.07); s.position.set(Math.cos(a) * 0.6, Math.sin(a) * 0.6, 0.06); g.add(s); }
+  return g; };
+G.heartRing = () => { const g = new THREE.Group(); g.add(band(0.6, 0.05)); const h = extrude(heartShape(0.24), 0.06); h.position.y = 0.78; g.add(h); return g; };
+
+/* سلسلة: حلقات صغيرة على شكل U */
+function chain(){
+  const g = new THREE.Group();
+  const curve = new THREE.CatmullRomCurve3([new THREE.Vector3(-0.85, 1.25, -0.2), new THREE.Vector3(-0.6, 0.2, 0), new THREE.Vector3(0, -0.42, 0.12), new THREE.Vector3(0.6, 0.2, 0), new THREE.Vector3(0.85, 1.25, -0.2)]);
+  const N = 120, link = new THREE.TorusGeometry(0.03, 0.009, 6, 14);
+  const inst = new THREE.InstancedMesh(link, MAT.silver, N), m4 = new THREE.Matrix4(), q = new THREE.Quaternion(), up = new THREE.Vector3(0, 0, 1);
+  for(let i = 0; i < N; i++){ const t = i / (N - 1), p = curve.getPointAt(t), tg = curve.getTangentAt(t);
+    q.setFromUnitVectors(new THREE.Vector3(1, 0, 0), tg); const tw = new THREE.Quaternion().setFromAxisAngle(tg, i % 2 ? Math.PI / 2 : 0); q.premultiply(tw);
+    m4.compose(p, q, new THREE.Vector3(1.4, 1, 1)); inst.setMatrixAt(i, m4); }
+  g.add(inst);
+  const bail = new THREE.Mesh(new THREE.TorusGeometry(0.045, 0.014, 10, 24), MAT.silver); bail.position.set(0, -0.47, 0.12); g.add(bail);
+  return g;
+}
+const pend = (g, m, y = -0.78) => { m.position.set(0, y, 0.12); g.add(m); return g; };
+G.heart = () => pend(chain(), extrude(heartShape(0.26), 0.07), -0.78);
+G.circle = () => { const g = chain(); const r = new THREE.Mesh(new THREE.TorusGeometry(0.22, 0.04, 20, 60), MAT.silver); r.position.set(0, -0.75, 0.12); g.add(r); const s = gem(0.09); s.position.set(0, -0.75, 0.14); g.add(s); return g; };
+G.star = () => pend(chain(), extrude(starShape(0.28, 0.12), 0.06), -0.8);
+G.drop = () => { const g = chain(); const s = gem(0.17, MAT.gemPink, 1.7); s.position.set(0, -0.82, 0.12); g.add(s); return g; };
+G.bar = () => { const rs = new THREE.Shape(), w = 0.07, h = 0.36, r = 0.05; rs.moveTo(-w, -h + r); rs.lineTo(-w, h - r); rs.quadraticCurveTo(-w, h, -w + r, h); rs.lineTo(w - r, h); rs.quadraticCurveTo(w, h, w, h - r); rs.lineTo(w, -h + r); rs.quadraticCurveTo(w, -h, w - r, -h); rs.lineTo(-w + r, -h); rs.quadraticCurveTo(-w, -h, -w, -h + r);
+  return pend(chain(), extrude(rs, 0.05), -0.86); };
+
+/* حلقان: زوج */
+const pair = make => { const g = new THREE.Group(); const a = make(), b = make(); a.position.x = -0.36; b.position.x = 0.36; b.rotation.y = 0.5; a.rotation.y = -0.5; g.add(a, b); return g; };
+G.hoops = () => pair(() => new THREE.Mesh(new THREE.TorusGeometry(0.3, 0.026, 16, 80), MAT.silver));
+G.huggies = () => pair(() => { const m = new THREE.Mesh(new THREE.TorusGeometry(0.17, 0.06, 20, 60), MAT.silver); m.scale.z = 1.5; return m; });
+G.studs = () => pair(() => { const g = new THREE.Group(); const s = gem(0.14); g.add(s); const c = new THREE.Mesh(new THREE.TorusGeometry(0.12, 0.018, 8, 30), MAT.silver); c.rotation.x = Math.PI / 2; c.position.y = -0.03; g.add(c); return g; });
+G.dropEar = () => pair(() => { const g = new THREE.Group(); const hook = new THREE.Mesh(new THREE.TorusGeometry(0.09, 0.015, 10, 30, Math.PI * 1.5), MAT.silver); hook.position.y = 0.42; g.add(hook);
+  for(let i = 0; i < 6; i++){ const l = new THREE.Mesh(new THREE.TorusGeometry(0.03, 0.009, 6, 14), MAT.silver); l.position.y = 0.3 - i * 0.07; l.rotation.y = i % 2 ? Math.PI / 2 : 0; g.add(l); }
+  const s = gem(0.13, MAT.gemPink, 1.6); s.position.y = -0.24; g.add(s); return g; });
+G.bars = () => pair(() => { const g = new THREE.Group(); const s = gem(0.07); s.position.y = 0.45; g.add(s);
+  const b = new THREE.Mesh(new THREE.CylinderGeometry(0.03, 0.03, 0.8, 16), MAT.silver); b.position.y = -0.02; g.add(b);
+  const e = new THREE.Mesh(new THREE.SphereGeometry(0.05, 16, 16), MAT.silver); e.position.y = -0.44; g.add(e); return g; });
+
+/* ظل خفيف تحت كل قطعة */
+const shadowTex = (() => { const c = document.createElement('canvas'); c.width = c.height = 128; const x = c.getContext('2d'); const gr = x.createRadialGradient(64, 64, 4, 64, 64, 64); gr.addColorStop(0, 'rgba(0,0,0,.55)'); gr.addColorStop(1, 'rgba(0,0,0,0)'); x.fillStyle = gr; x.fillRect(0, 0, 128, 128); return new THREE.CanvasTexture(c); })();
+
+/* ---------- الصف ---------- */
+const row = new THREE.Group(); scene.add(row);
+let items = [], cat = 'rings', spacing = 2.3, viewHalf = 5, rowHalf = 0, zoom = 0.75;
+const pointer = { x:0, y:0, inside:false, worldX:0 };
+let hovered = -1, camTargetX = 0;
+
+function build(c){
+  items.forEach(it => row.remove(it.root)); items = [];
+  PRODUCTS[c].items.forEach((p, i) => {
+    const root = new THREE.Group(), obj = G[p.shape](), sh = new THREE.Mesh(new THREE.PlaneGeometry(1.8, 0.55), new THREE.MeshBasicMaterial({ map:shadowTex, transparent:true, depthWrite:false }));
+    if(c === 'earrings') obj.scale.setScalar(1.5); // الحلقان صغيرة فبنكبّرها شوية
+    sh.rotation.x = -Math.PI / 2; sh.position.y = -1.25; root.add(sh); root.add(obj); row.add(root);
+    items.push({ root, obj, sh, p, i, scale:0.001, ox:0, oy:-0.6, rx:0, ry:(i % 2 ? 0.5 : -0.5), spin:Math.random() * 6, enter:performance.now() + i * 90 });
+  });
+  layout();
+}
+function layout(){
+  const w = wrap.clientWidth || innerWidth, h = wrap.clientHeight || 400;
+  renderer.setSize(w, h, false); camera.aspect = w / h; camera.updateProjectionMatrix();
+  viewHalf = Math.tan(THREE.MathUtils.degToRad(camera.fov / 2)) * camera.position.z * camera.aspect;
+  // على الموبايل القطع بتاخد مسافة أكبر والصف بيتحرك مع صباعك
+  const small = w < 640;
+  zoom = small ? 0.45 : 0.75;
+  spacing = small ? 2.7 : Math.max(2.2, Math.min(3.0, (viewHalf * 2) / (items.length + 0.4)));
+  rowHalf = (items.length - 1) * spacing / 2;
+  items.forEach((it, i) => it.baseX = ((items.length - 1) / 2 - i) * spacing); // أول قطعة على اليمين (عربي)
+}
+addEventListener('resize', layout);
+
+/* ---------- الماوس / الصباع ---------- */
+function setPointer(cx, cy){
+  const r = wrap.getBoundingClientRect();
+  pointer.x = ((cx - r.left) / r.width) * 2 - 1; pointer.y = -(((cy - r.top) / r.height) * 2 - 1);
+  pointer.inside = true;
+}
+wrap.addEventListener('pointermove', e => setPointer(e.clientX, e.clientY));
+wrap.addEventListener('pointerdown', e => setPointer(e.clientX, e.clientY));
+wrap.addEventListener('pointerleave', () => { pointer.inside = false; });
+wrap.addEventListener('click', () => { if(hovered >= 0) openSheet(items[hovered].p); });
+// كيبورد: يمين وشمال بين القطع، Enter يفتح
+let kbIndex = -1;
+wrap.tabIndex = 0;
+wrap.addEventListener('keydown', e => {
+  if(e.key === 'ArrowLeft' || e.key === 'ArrowRight'){ e.preventDefault(); kbIndex = Math.max(0, Math.min(items.length - 1, (kbIndex < 0 ? 0 : kbIndex) + (e.key === 'ArrowLeft' ? 1 : -1))); }
+  if(e.key === 'Enter' && kbIndex >= 0) openSheet(items[kbIndex].p);
+});
+
+/* ---------- كل فريم ---------- */
+const lerp = (a, b, t) => a + (b - a) * t;
+let last = performance.now();
+function tick(now){
+  const dt = Math.min(0.05, (now - last) / 1000); last = now;
+  // الكاميرا بتمشي مع الماوس لو الصف أعرض من الشاشة
+  const over = Math.max(0, rowHalf - viewHalf + spacing * 0.6);
+  camTargetX = pointer.inside ? pointer.x * over : camTargetX * 0.98;
+  camera.position.x = lerp(camera.position.x, camTargetX, 0.06);
+  // مكان الماوس في المشهد
+  pointer.worldX = camera.position.x + pointer.x * viewHalf;
+  let best = -1, bestInf = 0;
+  items.forEach((it, i) => {
+    const started = now >= it.enter;
+    let inf = 0;
+    if(kbIndex >= 0 && !pointer.inside) inf = i === kbIndex ? 1 : 0;
+    else if(pointer.inside){ const d = (pointer.worldX - it.baseX) / spacing; inf = Math.exp(-d * d * 1.6); }
+    if(inf > bestInf){ bestInf = inf; best = i; }
+    const k = 1 - Math.pow(0.0009, dt);
+    it.scale = lerp(it.scale, started ? 1.1 + zoom * inf : 0.001, k);
+    it.ox = lerp(it.ox, pointer.inside ? (pointer.worldX - it.baseX) * 0.28 * inf : 0, k);     // بتتحرك مع الماوس يمين وشمال
+    it.oy = lerp(it.oy, started ? 0.32 * inf + (reduce ? 0 : Math.sin(now / 900 + i) * 0.05) : -0.6, k);
+    it.spin += dt * (reduce ? 0 : (0.25 + 0.9 * inf));
+    const lookY = pointer.inside ? (pointer.worldX - it.baseX) * 0.35 * inf : 0;
+    it.ry = lerp(it.ry, Math.sin(it.spin) * 0.55 + lookY, k);
+    it.rx = lerp(it.rx, pointer.inside ? -pointer.y * 0.35 * inf : 0, k);
+    it.root.position.set(it.baseX + it.ox, it.oy, 0);
+    it.root.scale.setScalar(Math.max(0.001, it.scale));
+    it.obj.rotation.set(it.rx, it.ry, 0);
+    it.sh.material.opacity = 0.55 - 0.25 * inf;
+    it.sh.position.y = -1.25 - it.oy;
+  });
+  const h = bestInf > 0.5 ? best : -1;
+  if(h !== hovered){ hovered = h; showCaption(h); wrap.classList.toggle('hovering', h >= 0); }
+  renderer.render(scene, camera);
+  requestAnimationFrame(tick);
+}
+
+/* ---------- الكلام تحت القطع ---------- */
+const cap = document.getElementById('caption');
+let capT;
+function showCaption(i){
+  cap.classList.add('fade'); clearTimeout(capT);
+  capT = setTimeout(() => {
+    const it = items[i];
+    cap.querySelector('.name').textContent = it ? it.p.name : PRODUCTS[cat].label + ' — ' + PRODUCTS[cat].items.length + ' قطع';
+    cap.querySelector('.meta').textContent = it ? egp(it.p.price) + ' — دوسي عشان تطلبيها' : 'قرّبي من أي قطعة';
+    cap.classList.remove('fade');
+  }, 120);
+  if(i >= 0) document.getElementById('hint').style.opacity = 0;
+}
+
+/* ---------- الأقسام ---------- */
+document.querySelectorAll('.cat').forEach(b => b.addEventListener('click', () => {
+  if(b.dataset.cat === cat) return;
+  document.querySelectorAll('.cat').forEach(x => x.setAttribute('aria-selected', x === b ? 'true' : 'false'));
+  // القطع القديمة بتنزل، والجديدة بتطلع واحدة ورا التانية
+  items.forEach(it => it.enter = Infinity);
+  setTimeout(() => { cat = b.dataset.cat; kbIndex = -1; build(cat); showCaption(-1); }, reduce ? 0 : 280);
+}));
+
+build(cat); showCaption(-1); requestAnimationFrame(tick);
+}
+
+/* =====================================================================
+   🛍️ تفاصيل القطعة + الطلب على واتساب
+   ===================================================================== */
+const sheet = document.getElementById('sheet');
+let current = null, chosen = '';
+function openSheet(p){
+  current = p; const C = Object.values(PRODUCTS).find(c => c.items.includes(p));
+  chosen = C.opts[Math.floor(C.opts.length / 2)] || '';
+  document.getElementById('pName').textContent = p.name;
+  document.getElementById('pPrice').textContent = egp(p.price);
+  document.getElementById('pDesc').textContent = p.desc;
+  document.getElementById('pOptLabel').textContent = C.opt ? 'اختاري ' + C.opt : '';
+  const box = document.getElementById('pOpts'); box.innerHTML = '';
+  C.opts.forEach(o => { const b = document.createElement('button'); b.type = 'button'; b.textContent = o; b.setAttribute('aria-pressed', o === chosen ? 'true' : 'false');
+    b.onclick = () => { chosen = o; box.querySelectorAll('button').forEach(x => x.setAttribute('aria-pressed', x === b ? 'true' : 'false')); updateOrder(C); }; box.appendChild(b); });
+  updateOrder(C);
+  sheet.classList.add('open'); document.getElementById('sheetX').focus();
+}
+function updateOrder(C){
+  document.getElementById('pOrder').href = waLink(`أهلاً، عايزة أطلب: ${current.name} — ${current.price} ج${C.opt && chosen ? ' — ' + C.opt + ': ' + chosen : ''}`);
+}
+const closeSheet = () => sheet.classList.remove('open');
+document.getElementById('sheetX').onclick = closeSheet;
+sheet.addEventListener('click', e => { if(e.target === sheet) closeSheet(); });
+addEventListener('keydown', e => { if(e.key === 'Escape') closeSheet(); });
+document.getElementById('brandName').firstChild.textContent = CONFIG.BRAND;
+// على الموبايل: الكلام عن الصباع مش الماوس
+if(matchMedia('(hover: none)').matches){
+  document.querySelector('.intro p').textContent = 'اختاري القسم من تحت، وحرّكي صباعك يمين وشمال على القطع: اللي تقفي عندها تكبر وتلف معاكي. دوسي عليها عشان تطلبيها.';
+  document.getElementById('hint').textContent = 'حرّكي صباعك يمين وشمال على القطع';
+}
+</script>
+</body>
+</html>
